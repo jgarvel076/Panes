@@ -1,0 +1,7 @@
+{
+  "name": "Panes",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
