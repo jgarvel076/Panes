@@ -21,6 +21,7 @@ idpanSelec: string = "";
   }
 
   clickBotonInsertar(){
+   //console.log(this.panEditando.nombre);
     this.firestoreService.insertar("panes", this.panEditando).then(() => {
     console.log('Pan Guardado correctamente!');
     this.panEditando= {} as Pan;
@@ -43,6 +44,7 @@ idpanSelec: string = "";
   }
 
   selecPan(idpan:string, panSelec: Pan){
+    console.log(panSelec);
     this.panEditando = panSelec;
     this.idpanSelec = idpan;
   }
