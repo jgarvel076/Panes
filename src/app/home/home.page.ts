@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {Pan} from '../pan';
 import { FirestoreService } from '../firestore.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -16,7 +17,7 @@ export class HomePage {
 }];
 idpanSelec: string = "";
 
-  constructor(private firestoreService: FirestoreService) {
+  constructor(private firestoreService: FirestoreService, private router: Router) {
     this.obtenerListaPanes();
   }
 
@@ -47,6 +48,7 @@ idpanSelec: string = "";
     console.log(panSelec);
     this.panEditando = panSelec;
     this.idpanSelec = idpan;
+    this.router.navigate(['detalle',this.idpanSelec]);
   }
 
   clickBotonBorrar(){
