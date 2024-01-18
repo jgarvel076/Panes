@@ -14,10 +14,16 @@ export class DetallePage implements OnInit {
 
   document: any = {
     id: "",
-    data: {} as Pan
+    data: {} as Pan}
+
+    arrayColeccionPanes: any = {
+      id: "",
+      pan: {} as Pan
   };
 
-  constructor(private activatedRoute: ActivatedRoute, private firestoreService: FirestoreService) { }
+  constructor(private activatedRoute: ActivatedRoute, private firestoreService: FirestoreService) {
+    this.obtenerListaPanes();
+  }
 
   ngOnInit() {
     let idRecibido = this.activatedRoute.snapshot.paramMap.get('id');
@@ -26,6 +32,55 @@ export class DetallePage implements OnInit {
     }else {
       this.id="";
     }
+
+    this.firestoreService.consultarPorId("panes", this.id).subscribe((resultado:any) => {
+      if(resultado.payload.data() != null) {
+        this.document.id = resultado.payload.id
+        this.document.data = resultado.payload.data();
+      } else {
+        this.document.data = {} as Pan;
+      }
+    })
   }
 
+  idpanSelec: string = "";
+
+
+  obtenerListaPanes(){
+    this.firestoreService.consultar("panes").subscribe((datosRecibidos) => {
+      this.arrayColeccionPanes = [];
+      datosRecibidos.forEach((datosPan) => {
+        this.arrayColeccionPanes.push({
+          id: datosPan.payload.doc.id,
+          pan: datosPan.payload.doc.data()
+
+        })
+      });
+    });
+  }
+
+  selecPan(idpan:string, panSelec: Pan){
+    console.log(panSelec);
+    this.document.data = panSelec;
+    this.idpanSelec = idpan;
+    this.router.navigate(['detalle',this.idpanSelec]);
+  }
+
+  clickBotonBorrar(){
+    this.firestoreService.borrar("panes", this.idpanSelec).then(() => {
+    console.log('Pan borrado correctamente!');
+    this.document.data= {} as Pan;
+    this.idpanSelec = "";
+    }, (error) => {
+      console.error(error);
+    });
+  }
+  clickBotonModificar(){
+    this.firestoreService.modificar("panes",this.idpanSelec, this.document.data).then(() => {
+      console.log('Pan modificado correctamente!');
+    }, (error) => {
+      console.error(error);
+    });
+  }
+ 
 }
