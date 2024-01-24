@@ -51,22 +51,4 @@ idpanSelec: string = "";
     this.router.navigate(['detalle',this.idpanSelec]);
   }
 
-  clickBotonBorrar(){
-    this.firestoreService.borrar("panes", this.idpanSelec).then(() => {
-    console.log('Pan borrado correctamente!');
-    this.panEditando= {} as Pan;
-    this.idpanSelec = "";
-    }, (error) => {
-      console.error(error);
-    });
-  }
-  clickBotonModificar(){
-    this.firestoreService.modificar("panes",this.idpanSelec, this.panEditando).then(() => {
-      console.log('Pan modificado correctamente!');
-    }, (error) => {
-      console.error(error);
-    });
-  }
- 
-
   }

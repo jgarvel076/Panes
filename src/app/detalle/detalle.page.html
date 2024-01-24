@@ -10,8 +10,10 @@
       <ion-title size="large">detalle</ion-title>
     </ion-toolbar>
   </ion-header>
-  <p>{{ id }}</p>
   <p>Nombre: {{ document.data.nombre }}</p>
+  <p>Descripcion: {{ document.data.descripcion }}</p>
+  <p>Tipo: {{ document.data.tipo }}</p>
+  <p>Peso: {{ document.data.peso }}</p>
 
   <ion-button (click)="clickBotonBorrar()">Borrar pan</ion-button>
   <ion-button (click)="clickBotonModificar()">Modificar pan</ion-button>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FirestoreService } from '../firestore.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {Pan} from '../pan';
 
 @Component({
@@ -21,7 +21,7 @@ export class DetallePage implements OnInit {
       pan: {} as Pan
   };
 
-  constructor(private activatedRoute: ActivatedRoute, private firestoreService: FirestoreService) {
+  constructor(private activatedRoute: ActivatedRoute, private firestoreService: FirestoreService, private router: Router) {
     this.obtenerListaPanes();
   }
 
