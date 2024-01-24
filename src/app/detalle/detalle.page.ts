@@ -14,9 +14,10 @@ export class DetallePage implements OnInit {
 
   document: any = {
     id: "",
-    data: {} as Pan}
+    data: {} as Pan
+  }
 
-    arrayColeccionPanes: any = {
+  arrayColeccionPanes: any = {
       id: "",
       pan: {} as Pan
   };
@@ -67,7 +68,7 @@ export class DetallePage implements OnInit {
   }
 
   clickBotonBorrar(){
-    this.firestoreService.borrar("panes", this.idpanSelec).then(() => {
+    this.firestoreService.borrar("panes", this.id).then(() => {
     console.log('Pan borrado correctamente!');
     this.document.data= {} as Pan;
     this.idpanSelec = "";
@@ -76,7 +77,7 @@ export class DetallePage implements OnInit {
     });
   }
   clickBotonModificar(){
-    this.firestoreService.modificar("panes",this.idpanSelec, this.document.data).then(() => {
+    this.firestoreService.modificar("panes",this.id, this.document.data).then(() => {
       console.log('Pan modificado correctamente!');
     }, (error) => {
       console.error(error);

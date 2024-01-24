@@ -10,10 +10,18 @@
       <ion-title size="large">detalle</ion-title>
     </ion-toolbar>
   </ion-header>
-  <p>Nombre: {{ document.data.nombre }}</p>
-  <p>Descripcion: {{ document.data.descripcion }}</p>
-  <p>Tipo: {{ document.data.tipo }}</p>
-  <p>Peso: {{ document.data.peso }}</p>
+
+  <ion-label>Nombre</ion-label>
+  <ion-input [(ngModel)]="document.data.nombre"></ion-input>
+
+  <ion-label>Descripcion</ion-label>
+  <ion-input [(ngModel)]="document.data.descripcion"></ion-input>
+
+  <ion-label>Tipo</ion-label>
+  <ion-input [(ngModel)]="document.data.tipo"></ion-input>
+
+  <ion-label>Peso</ion-label>
+  <ion-input [(ngModel)]="document.data.peso"></ion-input>
 
   <ion-button (click)="clickBotonBorrar()">Borrar pan</ion-button>
   <ion-button (click)="clickBotonModificar()">Modificar pan</ion-button>
