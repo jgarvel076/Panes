@@ -29,6 +29,7 @@ idpanSelec: string = "";
     }, (error) => {
       console.error(error);
     });
+    this.router.navigate(['detalle',this.idpanSelec]);
   }
 
   obtenerListaPanes(){
