@@ -75,6 +75,7 @@ export class DetallePage implements OnInit {
     }, (error) => {
       console.error(error);
     });
+    this.router.navigate(['home']);
   }
   clickBotonModificar(){
     this.firestoreService.modificar("panes",this.id, this.document.data).then(() => {
@@ -82,6 +83,7 @@ export class DetallePage implements OnInit {
     }, (error) => {
       console.error(error);
     });
+    this.router.navigate(['home']);
   }
  
 }
