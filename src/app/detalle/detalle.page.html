@@ -23,7 +23,8 @@
   <ion-label>Peso</ion-label>
   <ion-input [(ngModel)]="document.data.peso"></ion-input>
 
-  <ion-button (click)="clickBotonBorrar()">Borrar pan</ion-button>
-  <ion-button (click)="clickBotonModificar()">Modificar pan</ion-button>
+  <ion-button *ngIf="nuevo"  (click)="clickBotonInsertar()" color="success">Añadir Pan</ion-button>
+  <ion-button *ngIf="existente" (click)="clickBotonBorrar()" color="danger">Borrar</ion-button>
+  <ion-button *ngIf="existente" (click)="clickBotonModificar()" color="warning">Modificar</ion-button>
   
 </ion-content>

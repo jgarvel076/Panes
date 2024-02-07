@@ -21,16 +21,16 @@ idpanSelec: string = "";
     this.obtenerListaPanes();
   }
 
-  clickBotonInsertar(){
+  //clickBotonInsertar(){
    //console.log(this.panEditando.nombre);
-    this.firestoreService.insertar("panes", this.panEditando).then(() => {
-    console.log('Pan Guardado correctamente!');
-    this.panEditando= {} as Pan;
-    }, (error) => {
-      console.error(error);
-    });
-    this.router.navigate(['detalle',this.idpanSelec]);
-  }
+    //this.firestoreService.insertar("panes", this.panEditando).then(() => {
+    //console.log('Pan Guardado correctamente!');
+    //this.panEditando= {} as Pan;
+    //}, (error) => {
+    //  console.error(error);
+    //});
+    //this.router.navigate(['detalle','nuevo']);
+  //}
 
   obtenerListaPanes(){
     this.firestoreService.consultar("panes").subscribe((datosRecibidos) => {
@@ -50,6 +50,11 @@ idpanSelec: string = "";
     this.panEditando = panSelec;
     this.idpanSelec = idpan;
     this.router.navigate(['detalle',this.idpanSelec]);
+  }
+
+  selecNuevo(){
+
+    this.router.navigate(['detalle', 'nuevo'])  ;
   }
 
   }

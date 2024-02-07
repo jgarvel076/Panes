@@ -11,6 +11,8 @@ import {Pan} from '../pan';
 export class DetallePage implements OnInit {
 
   id:string="";
+  nuevo: boolean = true;
+  existente: boolean = false;
 
   document: any = {
     id: "",
@@ -38,6 +40,9 @@ export class DetallePage implements OnInit {
       if(resultado.payload.data() != null) {
         this.document.id = resultado.payload.id
         this.document.data = resultado.payload.data();
+        this.nuevo = false;
+        this.existente = true
+        
       } else {
         this.document.data = {} as Pan;
       }
@@ -85,5 +90,15 @@ export class DetallePage implements OnInit {
     });
     this.router.navigate(['home']);
   }
+  clickBotonInsertar(){
+    //console.log(this.panEditando.nombre);
+     this.firestoreService.insertar("panes", this.document.data).then(() => {
+     console.log('Pan Guardado correctamente!');
+     this.document.pan= {} as Pan;
+     }, (error) => {
+       console.error(error);
+     });
+     this.router.navigate(['home']);
+   }
  
 }
