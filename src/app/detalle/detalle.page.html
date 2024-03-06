@@ -24,7 +24,19 @@
   <ion-input [(ngModel)]="document.data.peso"></ion-input>
 
   <ion-button *ngIf="nuevo"  (click)="clickBotonInsertar()" color="success">Añadir Pan</ion-button>
-  <ion-button *ngIf="existente" (click)="clickBotonBorrar()" color="danger">Borrar</ion-button>
+  <ion-button *ngIf="existente" (click)="confirmarBorrado()" color="danger">Borrar</ion-button>
   <ion-button *ngIf="existente" (click)="clickBotonModificar()" color="warning">Modificar</ion-button>
+  <ion-button color="success" (click)="seleccionarImagen()" fill="outline">
+    Subir Imagen (<ion-icon name="cloud-upload-outline"></ion-icon>)
+  </ion-button>
+  <ion-button color="success" (click)="subirImagen()" fill="outline">
+    GUARDAR CAMBIOS
+  </ion-button>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="share()">
+      <ion-icon name="share-social-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
   
 </ion-content>

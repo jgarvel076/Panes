@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FirestoreService } from '../firestore.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import {Pan} from '../pan';
+import { LoadingController, ToastController } from '@ionic/angular';
+import { ImagePicker } from '@awesome-cordova-plugins/image-picker/ngx';
+import { AlertController } from '@ionic/angular';
+import { Share } from '@capacitor/share';
 
 @Component({
   selector: 'app-detalle',
@@ -24,7 +28,16 @@ export class DetallePage implements OnInit {
       pan: {} as Pan
   };
 
-  constructor(private activatedRoute: ActivatedRoute, private firestoreService: FirestoreService, private router: Router) {
+  imagenSelect: string = "";
+
+  constructor(private activatedRoute: ActivatedRoute, 
+    private firestoreService: FirestoreService, 
+    private router: Router, 
+    private alertController: AlertController,
+    private loadingController: LoadingController,
+    private toastController: ToastController,
+    private imagePicker: ImagePicker
+    ) {
     this.obtenerListaPanes();
   }
 
@@ -72,6 +85,31 @@ export class DetallePage implements OnInit {
     this.router.navigate(['detalle',this.idpanSelec]);
   }
 
+  async confirmarBorrado() {
+    const alert = await this.alertController.create({
+      header: 'Confirmación',
+      message: '¿Deseas borrar este pan permanentemente?',
+      buttons: [
+        {
+          text: 'no',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Borrado cancelado');
+          }
+        }, {
+          text: 'si',
+          handler: () => {
+            console.log('Borrado confirmado');
+            this.clickBotonBorrar(); // Llama a la función de borrado cuando el usuario confirma
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
   clickBotonBorrar(){
     this.firestoreService.borrar("panes", this.id).then(() => {
     console.log('Pan borrado correctamente!');
@@ -100,5 +138,91 @@ export class DetallePage implements OnInit {
      });
      this.router.navigate(['home']);
    }
- 
+
+   //IMAGEN
+   async seleccionarImagen() {
+    //Comprobamos si la aplicaciónn tiene parámetros de lectura
+    console.log("Entramos seleccionar imagen")
+    this.imagePicker.hasReadPermission().then(
+      (result) => {
+        //Si no tiene permiso de lectura se solicita al usuario
+        if (result == false) {
+          this.imagePicker.requestReadPermission();
+        } else {
+          console.log("Búscamos imagen en selector")
+          //Abrir selector de imágenes (ImagePicker)
+          this.imagePicker.getPictures({
+            maximumImagesCount: 1, //Permitir sólo 1 imagen
+            outputType: 1 // 1 = Base64
+          }).then(
+            (results) => {
+              console.log(results) // En la variable results se tienen las imágenes seleccionadas
+              if (results.length > 0) { // Si el usuario ha elegido alguna imagen
+                console.log("Imagen seleccionado");
+                // En la variaBLEe imagenSelect quedará almacenadda la imagen seleccionada
+                this.imagenSelect = "data:image/jpeg;base64," + results[0];
+                console.log("Imagen que se ha seleccionado (En Base64): " + this.imagenSelect);
+              }
+            },
+            (err) => {
+              console.log(err)
+            }
+          );
+        }
+      }, (err) => {
+        console.log(err);
+      });
+  }
+
+  async subirImagen() {
+    
+    // Mensaje de espera mientras se sube la imagen
+    const loading = await this.loadingController.create({
+      message: 'Please wait ...'
+    });
+
+    // Mensaje de finalización de subida de la imagen
+    const toast = await this.toastController.create({
+      message: 'Image was updated successfully',
+      duration: 3000
+    });
+
+    // Carpeta del Storage donde se almacenará la imagen
+    let nombreCarpeta = "imagenes";
+
+    // Mostrar el mensaje de espera
+    loading.present();
+
+    //Asignar el nombre de la iamgen en función de la hora actual para evitar duplicaciones de nombres
+    let nombreImagen = '${new Date().getTime()}';
+    //Llamar al método que sube la imagen al storage
+    this.firestoreService.subirImagenBase64(nombreCarpeta, nombreImagen, this.imagenSelect)
+    .then(snapshot => {
+      snapshot.ref.getDownloadURL()
+      .then(downloadURL => {
+        console.log("downloadURL:" + downloadURL);
+        toast.present();
+        loading.dismiss();
+      })
+    })
+  }
+
+  async eliminarArchivo(fileURL: string) {
+    const toast = await this.toastController.create({
+      message: 'File deleted successfully',
+      duration: 3000
+    });
+    this.firestoreService.eliminarArchivoPorUrl(fileURL)
+      .then(() => {
+        toast.present();
+      }, (err) => {
+        console.log(err)
+      });
+  }
+
+  async share(){
+    await Share.share({
+      text: "Pan: " + this.document.data.nombre + " Tipo: " + this.document.data.tipo,
+    });
+    }
 }

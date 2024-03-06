@@ -1,0 +1,50 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Informacion</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Informacion</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <p>Empresa: Panaderia Julian</p>
+  <p>Localización: Prado del Rey</p>
+  <p>Descripción: Pequeña panaderia artesanal fundada como casa de pan en 1825. Fue la primera panaderia 
+    en Prado del Rey y actualmente es una de las panaderias activas mas antiguas de Cádiz.
+  </p>
+  <p>Localización:</p>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="llamar()">
+      <ion-icon name="call"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+
+<ion-toolbar>
+
+  <ion-tabs>
+   <ion-tab-bar slot="bottom">
+     <ion-tab-button tab="home">
+       <ion-icon name="triangle"></ion-icon>
+       <ion-label>Inicio</ion-label>
+     </ion-tab-button>
+
+     <ion-tab-button tab="informacion">
+       <ion-icon name="ellipse"></ion-icon>
+       <ion-label>Informacion</ion-label>
+     </ion-tab-button>
+
+     <ion-tab-button tab="version">
+       <ion-icon name="ellipse"></ion-icon>
+       <ion-label>Versión</ion-label>
+     </ion-tab-button>
+   </ion-tab-bar>
+
+ </ion-tabs>
+
+</ion-toolbar>
