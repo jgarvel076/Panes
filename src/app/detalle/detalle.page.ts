@@ -161,6 +161,7 @@ export class DetallePage implements OnInit {
                 console.log("Imagen seleccionado");
                 // En la variaBLEe imagenSelect quedará almacenadda la imagen seleccionada
                 this.imagenSelect = "data:image/jpeg;base64," + results[0];
+                //let document.data.imagen = this.imagenSelect;
                 console.log("Imagen que se ha seleccionado (En Base64): " + this.imagenSelect);
               }
             },

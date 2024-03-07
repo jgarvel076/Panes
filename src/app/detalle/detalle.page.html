@@ -23,6 +23,11 @@
   <ion-label>Peso</ion-label>
   <ion-input [(ngModel)]="document.data.peso"></ion-input>
 
+  <ion-label>Imagen</ion-label>
+  <img
+    src="{{document.data.imagen}}" alt="imagen del pan" *ngIF="imagenSelect || document.data.imagen"
+  />
+
   <ion-button *ngIf="nuevo"  (click)="clickBotonInsertar()" color="success">Añadir Pan</ion-button>
   <ion-button *ngIf="existente" (click)="confirmarBorrado()" color="danger">Borrar</ion-button>
   <ion-button *ngIf="existente" (click)="clickBotonModificar()" color="warning">Modificar</ion-button>

@@ -3,4 +3,5 @@ export interface Pan {
     descripcion: string;
     tipo:string;
     peso:number;
+    imagen:string;
 }
