@@ -23,7 +23,6 @@
   <ion-label>Peso</ion-label>
   <ion-input [(ngModel)]="document.data.peso"></ion-input>
 
-  <ion-label>Imagen</ion-label>
   <img
     src="{{document.data.imagen}}" alt="imagen del pan" *ngIF="imagenSelect || document.data.imagen"
   />
